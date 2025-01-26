@@ -1,0 +1,21 @@
+<!DOCTYPE html> <!-- Declares that this is a HTML file  -->
+<html lang="en">
+
+<head> <!-- Contains metadata about the document -->
+    <meta charset="UTF-8"> <!-- Declares the character encoding for the document -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Analyzer</title>
+</head>
+
+<body>
+    <h1>Welcome to the Resume Analyzer</h1> <!-- Heading of the page -->
+    <p> Upload your resume as a PDF or DOCX file</p>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <!-- Specifies the route to send the form data to -->
+        <label for="resume">Upload your resume:</label>
+        <input type="file" id="resume" name="file" accept=".pdf,.docx" required>
+        <button type="submit">Analyze</button>
+    </form>
+</body>
+
+</html>
