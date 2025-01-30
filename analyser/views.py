@@ -21,18 +21,12 @@ def upload_resume(request):
     if request.method == 'POST' and request.FILES.get('file'):
         uploaded_file = request.FILES['file']
         
-        if not uploaded_file.name.endswith('.pdf'):
-            return HttpResponse("Please upload a valid PDF file.", status=400)
-        
         fs = FileSystemStorage()
         filename = fs.save(uploaded_file.name, uploaded_file)
         file_path = fs.path(filename)
 
         # Extract text from the PDF
         extracted_text = extract_text_from_pdf(file_path)
-
-        # Do something with the extracted text (e.g., store in DB, process it, etc.)
-        print(extracted_text)  # Debugging: Prints extracted text
 
         return HttpResponse(f"File uploaded and processed successfully. Extracted text: {extracted_text[:200]}...")  # Show first 200 chars
      
