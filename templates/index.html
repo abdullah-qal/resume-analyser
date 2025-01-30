@@ -10,7 +10,7 @@
 <body>
     <h1>Welcome to the Resume Analyzer</h1> <!-- Heading of the page -->
     <p> Upload your resume as a PDF or DOCX file</p>
-    <form action="/upload_resume" method="POST" enctype="multipart/form-data">
+    <form action="{% url 'upload_resume' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- Specifies the route to send the form data to -->
         <label for="resume">Upload your resume:</label>

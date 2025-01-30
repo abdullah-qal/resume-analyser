@@ -1,2 +1,6 @@
-media/
-__pycache__
+/media
+
+**/migrations/
+**/__pycache__/
+
+/resume_venv
