@@ -17,6 +17,13 @@
         <input type="file" id="resume" name="file" accept=".pdf,.docx" required>
         <button type="submit">Analyze</button>
     </form>
-</body>
 
+    <h2>Or parse a LinkedIn job posting</h2>
+    <form action="{% url 'parse_job_posting' %}" method="POST">
+        {% csrf_token %}
+        <label for="job_url">Enter LinkedIn Job URL:</label>
+        <input type="url" id="job_url" name="job_url" required>
+        <button type="submit">Parse Job Posting</button>
+    </form>
+</body>
 </html>

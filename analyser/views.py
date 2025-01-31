@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render
+from .utils.linkedin_parser import parse_linkedin_job_posting
 
 import docx2txt # For extracting text from DOCX files
 import pdfplumber # For extracting text from PDFs
@@ -52,3 +53,20 @@ def upload_resume(request):
         return HttpResponse(f"File uploaded and processed successfully. Extracted text: {extracted_text[:200]}...")  # Show first 200 chars
 
     return HttpResponse("Something went wrong", status=500)
+
+def parse_job_posting(request):
+    if request.method == 'POST':
+        job_url = request.POST.get('job_url')
+        if job_url:
+            # Parse the LinkedIn job posting
+            job_data = parse_linkedin_job_posting(job_url)
+            if job_data:
+                return HttpResponse(f"Job Title: {job_data['job_title']}<br>"
+                                   f"Company: {job_data['company_name']}<br>"
+                                   f"Location: {job_data['job_location']}<br>"
+                                   f"Description: {job_data['job_description'][:200]}...")  # Show first 200 chars
+            else:
+                return HttpResponse("Failed to parse the job posting.", status=400)
+        else:
+            return HttpResponse("No job URL provided.", status=400)
+    return HttpResponse("Invalid request method.", status=405)
