@@ -9,14 +9,17 @@
 
 <body>
     <h1>Welcome to the Resume Analyzer</h1> <!-- Heading of the page -->
-    <p> Upload your resume as a PDF or DOCX file</p>
-    <form action="{% url 'upload_resume' %}" method="POST" enctype="multipart/form-data">
+    <p> Upload your resume as a PDF or DOCX file and provide a LinkedIn job posting URL</p>
+    <form action="{% url 'match_requirements' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- Specifies the route to send the form data to -->
         <label for="resume">Upload your resume:</label>
         <input type="file" id="resume" name="file" accept=".pdf,.docx" required>
-        <button type="submit">Analyze</button>
+        
+        <label for="job_url">Enter LinkedIn Job URL:</label>
+        <input type="url" id="job_url" name="job_url" required>
+        
+        <button type="submit">Match</button>
     </form>
 </body>
-
 </html>
