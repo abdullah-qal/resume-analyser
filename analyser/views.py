@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+
 from .utils.linkedin_parser import parse_linkedin_job_posting
 
 import docx2txt # For extracting text from DOCX files
@@ -35,7 +38,7 @@ def get_file_type(file_path):
         
 """Uploads a resume and extracts text from it."""
 def upload_resume(request):
-    uploaded_file = request.FILES['file']
+    uploaded_file = request.FILES['resume']
     
     fs = FileSystemStorage()
     filename = fs.save(uploaded_file.name, uploaded_file)
@@ -52,27 +55,27 @@ def upload_resume(request):
     return extracted_text
 
 def parse_job_posting(request):
-        job_url = request.POST.get('job_url')
+        job_url = request.POST.get('job')
         job_data = parse_linkedin_job_posting(job_url)
         return job_data
+    
+# NOTE: The CSRF exemption is only for development purposes. It needs to be handled properly.
+@csrf_exempt
+def match_requirements(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "Invalid request method"}, status=405)
+    
+    resume_text = upload_resume(request)
+    job_data = parse_job_posting(request)
 
-def match_requirements (request):
-    if request.method == 'POST' and request.FILES.get('file'):
+    result = {
+        "resume_text": f"Resume Text (first 200 chars): {resume_text[:200]}...<br><br>",
+        "job_title": job_data['job_title'],
+        "company": job_data['company_name'],
+        "location": job_data['job_location'],
+        "description": f"{job_data['job_description'][:40]}..."
+    }
 
-        resume_text = upload_resume(request)
-        job_data = parse_job_posting(request)
+    return JsonResponse(result)
 
-        # Combine the results
-        result = (
-            f"Resume Text (first 200 chars): {resume_text[:200]}...<br><br>"
-            f"Job Title: {job_data['job_title']}<br>"
-            f"Company: {job_data['company_name']}<br>"
-            f"Location: {job_data['job_location']}<br>"
-            f"Description (first 200 chars): {job_data['job_description'][:200]}..."
-        )
-
-        # TODO Match the requirements between resume and job posting
-
-        return HttpResponse(result)
-    return HttpResponse("Invalid request or missing data.", status=400)
 
