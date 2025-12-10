@@ -14,10 +14,10 @@
         {% csrf_token %}
         <!-- Specifies the route to send the form data to -->
         <label for="resume">Upload your resume:</label>
-        <input type="file" id="resume" name="file" accept=".pdf,.docx" required>
+        <input type="file" id="resume" name="resume" accept=".pdf,.docx" required>
         
         <label for="job_url">Enter LinkedIn Job URL:</label>
-        <input type="url" id="job_url" name="job_url" required>
+        <input type="url" id="job_url" name="job" required>
         
         <button type="submit">Match</button>
     </form>
