@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [ 
     path('', views.index, name='index'),
+    path('csrf/', views.csrf_token_view, name='csrf_token'),
     path('match_requirements', views.match_requirements, name='match_requirements')
 ]
