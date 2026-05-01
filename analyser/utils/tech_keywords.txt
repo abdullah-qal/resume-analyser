@@ -1,0 +1,122 @@
+# Languages
+Python
+JavaScript
+TypeScript
+Java
+C
+C++
+C#
+Go
+Rust
+Ruby
+PHP
+Swift
+Kotlin
+Scala
+R
+MATLAB
+Perl
+Haskell
+Dart
+Elixir
+Lua
+Bash
+PowerShell
+
+# Frontend
+React
+Vue
+Angular
+Svelte
+Next.js
+Nuxt.js
+Gatsby
+HTML
+CSS
+SASS
+SCSS
+Tailwind
+Bootstrap
+Material UI
+Redux
+Zustand
+Webpack
+Vite
+Babel
+
+# Backend
+Node.js
+Express
+Django
+Flask
+FastAPI
+Spring Boot
+Spring
+Rails
+Laravel
+ASP.NET
+NestJS
+Fastify
+
+# Databases
+PostgreSQL
+MySQL
+SQLite
+MongoDB
+Redis
+Elasticsearch
+Cassandra
+DynamoDB
+Firebase
+Supabase
+MariaDB
+Oracle
+SQL Server
+
+# Cloud & DevOps
+AWS
+Azure
+GCP
+Google Cloud
+Docker
+Kubernetes
+Terraform
+Ansible
+Jenkins
+GitHub Actions
+GitLab CI
+CircleCI
+Heroku
+Vercel
+Netlify
+Linux
+
+# Tools & Protocols
+Git
+GitHub
+GitLab
+Jira
+Confluence
+Figma
+GraphQL
+REST
+gRPC
+Kafka
+RabbitMQ
+Celery
+Nginx
+Apache
+Hadoop
+Spark
+Airflow
+
+# ML / AI
+TensorFlow
+PyTorch
+scikit-learn
+Pandas
+NumPy
+Keras
+OpenCV
+Hugging Face
+LangChain

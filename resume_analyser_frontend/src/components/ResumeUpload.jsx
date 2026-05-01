@@ -101,6 +101,21 @@ function ResumeUpload() {
                                 <strong className="text-left">Description:</strong>
                                 <span className="text-center flex-1">{resultData.description}</span>
                             </div>
+                            {resultData.tech_stack && resultData.tech_stack.length > 0 && (
+                                <div className="mt-4">
+                                    <strong className="block mb-2">Required Tech Stack:</strong>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resultData.tech_stack.map((tech) => (
+                                            <span
+                                                key={tech}
+                                                className="bg-blue-700 text-white text-sm px-3 py-1 rounded-full"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <p className="text-gray-400">Processing your data...</p>
