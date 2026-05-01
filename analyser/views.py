@@ -76,7 +76,7 @@ def match_requirements(request):
         "job_title": job_data['job_title'],
         "company": job_data['company_name'],
         "location": job_data['job_location'],
-        "description": f"{job_data['job_description'][:40]}...",
+        "description": job_data['job_description'],
         "tech_stack": tech_stack,
     }
 
