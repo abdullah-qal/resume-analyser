@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from .utils.linkedin_parser import parse_linkedin_job_posting
+from .utils.tech_extractor import extract_tech_stack
 
 import docx2txt # For extracting text from DOCX files
 import pdfplumber # For extracting text from PDFs
@@ -68,12 +69,15 @@ def match_requirements(request):
     resume_text = upload_resume(request)
     job_data = parse_job_posting(request)
 
+    tech_stack = extract_tech_stack(job_data['job_description'])
+
     result = {
         "resume_text": f"Resume Text (first 200 chars): {resume_text[:200]}...<br><br>",
         "job_title": job_data['job_title'],
         "company": job_data['company_name'],
         "location": job_data['job_location'],
-        "description": f"{job_data['job_description'][:40]}..."
+        "description": job_data['job_description'],
+        "tech_stack": tech_stack,
     }
 
     return JsonResponse(result)

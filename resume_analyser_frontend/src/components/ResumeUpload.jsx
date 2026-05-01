@@ -42,7 +42,7 @@ function ResumeUpload() {
     };
 
     return (
-        <div className="max-w-md mx-auto py-10 px-12 border rounded-lg shadow-lg bg-gray-900 text-white">
+        <div className="max-w-3xl mx-auto py-10 px-12 border rounded-lg shadow-lg bg-gray-900 text-white">
             {/* Show form only if submission has NOT happened */}
             {!submissionFlag ? (
                 <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
@@ -97,10 +97,25 @@ function ResumeUpload() {
                                 <strong className="text-left">Company:</strong>
                                 <span className="text-center flex-1">{resultData.company}</span>
                             </div>
-                            <div className="flex justify-between mb-2">
-                                <strong className="text-left">Description:</strong>
-                                <span className="text-center flex-1">{resultData.description}</span>
+                            <div className="mb-2">
+                                <strong className="block mb-1">Description:</strong>
+                                <p className="text-sm text-gray-300 whitespace-pre-line">{resultData.description}</p>
                             </div>
+                            {resultData.tech_stack && resultData.tech_stack.length > 0 && (
+                                <div className="mt-4">
+                                    <strong className="block mb-2">Required Tech Stack:</strong>
+                                    <div className="flex flex-wrap gap-2">
+                                        {resultData.tech_stack.map((tech) => (
+                                            <span
+                                                key={tech}
+                                                className="bg-blue-700 text-white text-sm px-3 py-1 rounded-full"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <p className="text-gray-400">Processing your data...</p>
