@@ -101,14 +101,22 @@ function ResumeUpload() {
                                 <strong className="block mb-1">Description:</strong>
                                 <p className="text-sm text-gray-300 whitespace-pre-line">{resultData.description}</p>
                             </div>
-                            {resultData.tech_stack && resultData.tech_stack.length > 0 && (
+                            {(resultData.matched_skills?.length > 0 || resultData.missing_skills?.length > 0) && (
                                 <div className="mt-4">
                                     <strong className="block mb-2">Required Tech Stack:</strong>
                                     <div className="flex flex-wrap gap-2">
-                                        {resultData.tech_stack.map((tech) => (
+                                        {resultData.matched_skills?.map((tech) => (
                                             <span
                                                 key={tech}
-                                                className="bg-blue-700 text-white text-sm px-3 py-1 rounded-full"
+                                                className="bg-green-700 text-green-100 text-sm px-3 py-1 rounded-full"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                        {resultData.missing_skills?.map((tech) => (
+                                            <span
+                                                key={tech}
+                                                className="bg-red-700 text-red-100 text-sm px-3 py-1 rounded-full"
                                             >
                                                 {tech}
                                             </span>
