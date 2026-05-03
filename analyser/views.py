@@ -69,15 +69,20 @@ def match_requirements(request):
     resume_text = upload_resume(request)
     job_data = parse_job_posting(request)
 
-    tech_stack = extract_tech_stack(job_data['job_description'])
+    job_tech_stack = extract_tech_stack(job_data['job_description'])
+    resume_tech_stack = extract_tech_stack(resume_text)
+
+    resume_tech_lower = {t.lower() for t in resume_tech_stack}
+    matched_skills = [t for t in job_tech_stack if t.lower() in resume_tech_lower]
+    missing_skills = [t for t in job_tech_stack if t.lower() not in resume_tech_lower]
 
     result = {
-        "resume_text": f"Resume Text (first 200 chars): {resume_text[:200]}...<br><br>",
         "job_title": job_data['job_title'],
         "company": job_data['company_name'],
         "location": job_data['job_location'],
         "description": job_data['job_description'],
-        "tech_stack": tech_stack,
+        "matched_skills": matched_skills,
+        "missing_skills": missing_skills,
     }
 
     return JsonResponse(result)
