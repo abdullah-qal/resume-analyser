@@ -39,24 +39,28 @@ def get_file_type(file_path):
         
 """Uploads a resume and extracts text from it."""
 def upload_resume(request):
-    uploaded_file = request.FILES['resume']
+    uploaded_file = request.FILES.get('resume') or request.FILES.get('file')
+    if not uploaded_file:
+        return None, "No resume file provided."
     
     fs = FileSystemStorage()
     filename = fs.save(uploaded_file.name, uploaded_file)
     file_path = fs.path(filename)
 
-    # Extract text from the PDF
     ext = get_file_type(file_path)
     if ext == 'pdf':
         extracted_text = extract_text_from_pdf(file_path)
     elif ext == 'docx':
         extracted_text = extract_text_from_doc(file_path)
     else:
-        return "Invalid file type"
-    return extracted_text
+        fs.delete(filename)
+        return None, "Invalid file type. Please upload a PDF or DOCX."
+
+    fs.delete(filename)
+    return extracted_text, None
 
 def parse_job_posting(request):
-        job_url = request.POST.get('job')
+        job_url = request.POST.get('job') or request.POST.get('job_url')
         job_data = parse_linkedin_job_posting(job_url)
         return job_data
     
@@ -66,7 +70,9 @@ def match_requirements(request):
     if request.method != "POST":
         return JsonResponse({"error": "Invalid request method"}, status=405)
     
-    resume_text = upload_resume(request)
+    resume_text, upload_error = upload_resume(request)
+    if upload_error:
+        return JsonResponse({"error": upload_error}, status=400)
     job_data = parse_job_posting(request)
 
     job_tech_stack = extract_tech_stack(job_data['job_description'])
@@ -86,5 +92,4 @@ def match_requirements(request):
     }
 
     return JsonResponse(result)
-
 
